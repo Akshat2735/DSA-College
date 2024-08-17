@@ -1,0 +1,71 @@
+#include <stdio.h>
+
+struct Book {
+    char title[50];
+    char author[50];
+    int pages;
+    float price;
+};
+
+int main() {
+    struct Book books[5] = {
+        {"Book Title 1", "Author 1", 250, 19.99},
+        {"Book Title 2", "Author 2", 300, 25.50},
+        {"Book Title 3", "Author 3", 150, 12.75},
+        {"Book Title 4", "Author 4", 400, 30.00},
+        {"Book Title 5", "Author 5", 200, 15.20},
+
+    };
+
+    for (int i = 0; i < 5; i++) {
+        printf("\nDetails of book %d:\n", i+1);
+        printf("Title: %s\n", books[i].title);
+        printf("Author: %s\n", books[i].author);
+        printf("Pages: %d\n", books[i].pages);
+        printf("Price: $%.2f\n", books[i].price);
+    }
+
+    return 0;
+}
+
+
+# SAMPLE OUTPUT
+
+Details of the first book:
+Title: Book Title 1
+Author: Author 1
+Pages: 250
+Price: $19.99
+
+Details of book 1:
+Title: Book Title 1
+Author: Author 1
+Pages: 250
+Price: $19.99
+
+Details of book 2:
+Title: Book Title 2
+Author: Author 2
+Pages: 300
+Price: $25.50
+
+Details of book 3:
+Title: Book Title 3
+Author: Author 3
+Pages: 150
+Price: $12.75
+
+Details of book 4:
+Title: Book Title 4
+Author: Author 4
+Pages: 400
+Price: $30.00
+
+Details of book 5:
+Title: Book Title 5
+Author: Author 5
+Pages: 200
+Price: $15.20
+
+
+
