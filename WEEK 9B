@@ -1,0 +1,73 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Process {
+    int process_id;
+    int burst_time;
+};
+
+void swap(struct Process *a, struct Process *b) {
+    struct Process temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void sort_by_burst_time(struct Process queue[], int n) {
+    for (int i = 0; i < n-1; i++) {
+        for (int j = 0; j < n-i-1; j++) {
+            if (queue[j].burst_time > queue[j+1].burst_time) {
+                swap(&queue[j], &queue[j+1]);
+            }
+        }
+    }
+}
+
+void sjf_scheduling(struct Process queue[], int n) {
+    sort_by_burst_time(queue, n);
+    
+    int total_waiting_time = 0;
+    int current_time = 0;
+    
+    printf("Order of execution: \n");
+    
+    for (int i = 0; i < n; i++) {
+        printf("Process %d (Burst Time: %d)\n", queue[i].process_id, queue[i].burst_time);
+        total_waiting_time += current_time;
+        current_time += queue[i].burst_time;
+    }
+    
+    double avg_waiting_time = (double) total_waiting_time / n;
+    printf("Average waiting time: %.2f\n", avg_waiting_time);
+}
+
+int main() {
+    int n;
+    printf("Enter the number of processes: ");
+    scanf("%d", &n);
+    
+    struct Process queue[n];
+    for (int i = 0; i < n; i++) {
+        printf("Enter Process ID and Burst Time for Process %d: ", i+1);
+        scanf("%d %d", &queue[i].process_id, &queue[i].burst_time);
+    }
+    
+    sjf_scheduling(queue, n);
+    
+    return 0;
+}
+
+
+SAMPLE INPUT
+Enter the number of processes: 4
+Enter Process ID and Burst Time for Process 1: 1 6
+Enter Process ID and Burst Time for Process 2: 2 8
+Enter Process ID and Burst Time for Process 3: 3 7
+Enter Process ID and Burst Time for Process 4: 4 3
+
+SAMPLE OUTPUT
+Order of execution: 
+Process 4 (Burst Time: 3)
+Process 1 (Burst Time: 6)
+Process 3 (Burst Time: 7)
+Process 2 (Burst Time: 8)
+Average waiting time: 7.00
