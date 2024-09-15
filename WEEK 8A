@@ -1,0 +1,86 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 100  // Maximum size of the queue
+
+typedef struct Queue {
+    int front, rear, size;
+    int array[MAX];
+} Queue;
+
+// Initialize the queue
+void initializeQueue(Queue* q) {
+    q->front = 0;
+    q->rear = -1;
+    q->size = 0;
+}
+
+// Check if the queue is empty
+int isEmpty(Queue* q) {
+    return (q->size == 0);
+}
+
+// Check if the queue is full
+int isFull(Queue* q) {
+    return (q->size == MAX);
+}
+
+// Enqueue an element
+void enqueue(Queue* q, int data) {
+    if (isFull(q)) {
+        printf("Queue is full!\n");
+        return;
+    }
+    q->rear = (q->rear + 1) % MAX;
+    q->array[q->rear] = data;
+    q->size++;
+}
+
+// Dequeue an element
+int dequeue(Queue* q) {
+    if (isEmpty(q)) {
+        printf("Queue is empty!\n");
+        return -1;
+    }
+    int data = q->array[q->front];
+    q->front = (q->front + 1) % MAX;
+    q->size--;
+    return data;
+}
+
+// Display the queue
+void displayQueue(Queue* q) {
+    if (isEmpty(q)) {
+        printf("Queue is empty!\n");
+        return;
+    }
+    int i;
+    for (i = 0; i < q->size; i++) {
+        printf("%d ", q->array[(q->front + i) % MAX]);
+    }
+    printf("\n");
+}
+
+int main() {
+    Queue q;
+    initializeQueue(&q);
+
+    enqueue(&q, 10);
+    enqueue(&q, 20);
+    enqueue(&q, 30);
+
+    printf("Queue: ");
+    displayQueue(&q);
+
+    printf("Dequeued: %d\n", dequeue(&q));
+    printf("Queue after dequeue: ");
+    displayQueue(&q);
+
+    return 0;
+}
+
+
+SAMPLE OUTPUT
+Queue: 10 20 30 
+Dequeued: 10
+Queue after dequeue: 20 30
