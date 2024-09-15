@@ -1,0 +1,29 @@
+#include <stdio.h>
+
+void hanoi(int n, char from, char to, char aux) {
+    if (n == 1) {
+        printf("Move disk 1 from rod %c to rod %c\n", from, to);
+        return;
+    }
+    hanoi(n - 1, from, aux, to);
+    printf("Move disk %d from rod %c to rod %c\n", n, from, to);
+    hanoi(n - 1, aux, to, from);
+}
+
+int main() {
+    int n;
+    printf("Enter number of disks: ");
+    scanf("%d", &n);
+    hanoi(n, 'A', 'C', 'B');
+    return 0;
+}
+
+SAMPLE OUTPUT
+Enter number of disks: 3
+Move disk 1 from rod A to rod C
+Move disk 2 from rod A to rod B
+Move disk 1 from rod C to rod B
+Move disk 3 from rod A to rod C
+Move disk 1 from rod B to rod A
+Move disk 2 from rod B to rod C
+Move disk 1 from rod A to rod C
