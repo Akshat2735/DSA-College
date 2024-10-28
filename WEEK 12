@@ -1,0 +1,79 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_DEGREE 5 // Maximum degree of the B-tree
+
+struct BTreeNode {
+    int n; // Number of keys
+    int keys[2 * MAX_DEGREE - 1];
+    struct BTreeNode *ptr[2 * MAX_DEGREE];
+};
+
+struct BTree {
+    struct BTreeNode *root;
+};
+
+// Function to create a new node
+struct BTreeNode* createNode(int degree) {
+    struct BTreeNode *node = (struct BTreeNode*)malloc(sizeof(struct BTreeNode));
+    node->n = 0;
+    return node;
+}
+
+// Function to search for a key in a B-tree
+int searchKey(struct BTreeNode *root, int key) {
+    int i = 0;
+    while (i < root->n && key > root->keys[i]) {
+        i++;
+    }
+
+    // If found in this node
+    if (root->keys[i] == key) {
+        return 1;
+    }
+
+    // If key is not in this node and in subtree
+    if (root->ptr[i] != NULL) {
+        return searchKey(root->ptr[i], key);
+    }
+
+    return 0; // Key not found
+}
+
+// ... Other functions for insertion, deletion, traversal, etc.
+
+int main() {
+    // Create a B-tree of degree 3
+    struct BTree bt;
+    bt.root = createNode(3);
+
+    // Insert keys into the B-tree
+    insertKey(&bt.root, 10);
+    insertKey(&bt.root, 20);
+    insertKey(&bt.root, 30);
+    // ...
+
+    // Search for a key
+    int keyToSearch = 20;
+    if (searchKey(bt.root, keyToSearch)) {
+        printf("Key %d found in the B-tree\n", keyToSearch);
+    } else {
+        printf("Key %d not found in the B-tree\n", keyToSearch);
+    }
+
+    return 0;
+} 
+
+
+SAMPLE OUTPUT
+Initial State:
+
+[10]
+After inserting 20 and 30:
+
+[10, 20, 30]
+After inserting 40:
+
+[10, 20]
+  /   \
+[ ]   [30, 40]
